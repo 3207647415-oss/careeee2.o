@@ -13,16 +13,22 @@
 **方式一：直接打开**
 
 ```bash
-open empty-window/index.html
+open frontend/index.html
 ```
 
 **方式二：本地服务（推荐，Blob 下载等 API 在 file:// 下可能受限）**
 
 ```bash
-cd empty-window
+cd frontend
 ruby -run -e httpd . -p 8765
 # 或
 python3 -m http.server 8765
+```
+
+**方式三：Docker**
+
+```bash
+docker-compose up -d
 ```
 
 然后访问 <http://127.0.0.1:8765/index.html>。
@@ -120,19 +126,32 @@ python3 -m http.server 8765
 
 ```
 .
-├── empty-window/
-│   ├── index.html                  # 单文件应用（HTML + CSS + JS + 题库 + 数据全内联）
-│   ├── app.js                      # 拆分版逻辑（已被 index.html 内联替代，保留作参考）
-│   ├── enhancements.js             # 拆分版增量功能（同上）
-│   ├── questions.js                # 拆分版题库（同上）
-│   ├── crawler_official_data.py    # 官方数据采集脚本
+├── frontend/                    # 前端应用（纯前端单文件，零构建零依赖）
+│   ├── index.html               # 主入口：HTML + CSS + JS + 题库 + 数据全内联
+│   ├── about.html               # 关于页
+│   ├── community.html           # 社区页
+│   └── src/                     # 拆分版源码（已被 index.html 内联，保留作参考）
+│       ├── app.js
+│       ├── enhancements.js
+│       └── questions.js
+├── backend/                     # 数据采集服务（非运行时必需）
+│   ├── crawler_official_data.py # 官方数据采集脚本
 │   ├── requirements-crawler.txt
-│   ├── about.html
-│   └── community.html
+│   └── README.md
+├── docs/                        # 项目文档
+│   ├── 技术架构文档.md
+│   ├── 部署手册.md
+│   └── 学生端使用指南.md
+├── 项目介绍文档.md
+├── .env.example
+├── .gitignore
+├── docker-compose.yml
 └── README.md
 ```
 
-**运行只需要 `index.html` 一个文件**，其余为开发过程与数据采集辅助文件。
+**运行只需要 `frontend/index.html` 一个文件**，其余为开发过程、数据采集与文档辅助文件。
+
+目录结构对标参考项目 [CiKeZhang/KNOWLSLE](https://github.com/CiKeZhang/KNOWLSLE) 的 `frontend/` / `backend/` / `docs/` 三层拆分。
 
 ---
 
